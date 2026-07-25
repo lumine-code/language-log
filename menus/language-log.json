@@ -1,0 +1,22 @@
+{
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "Language Log",
+          "submenu": [
+            {
+              "label": "Toggle filter",
+              "command": "language-log:toggle-log-panel"
+            },
+            {
+              "label": "Toggle focus",
+              "command": "language-log:toggle-focus"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

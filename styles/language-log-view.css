@@ -1,12 +1,10 @@
-@import "ui-variables";
-
-.language-log-plus-view {
-  @item-width: 300px;
-  @item-color: #31363f;
-  @min-width: 200px;
+.language-log-view {
+  --log-item-width: 300px;
+  --log-item-color: #31363f;
+  --log-min-width: 200px;
 
   -webkit-user-select: none;
-  padding: (@component-padding / 2);
+  padding: calc(var(--component-padding) / 2);
   overflow-x: auto;
 
   svg.icon {
@@ -18,27 +16,28 @@
   }
 
   .header {
-    padding: (@component-padding / 4) (@component-padding / 2);
-    min-width: @min-width;
+    padding: calc(var(--component-padding) / 4) calc(var(--component-padding) / 2);
+    min-width: var(--log-min-width);
     line-height: 1.75;
 
     .description {
       display: inline-block;
-      color: @text-color-subtle;
-      padding-left: @component-padding;
+      color: var(--text-color-subtle);
+      padding-left: var(--component-padding);
+
       &.warning {
-        color: @text-color-warning;
+        color: var(--text-color-warning);
         font-weight: normal;
       }
     }
   }
 
   .header-item {
-    margin: (@component-padding / 4) 0;
+    margin: calc(var(--component-padding) / 4) 0;
   }
 
   .options-label {
-    color: @text-color-subtle;
+    color: var(--text-color-subtle);
     position: relative;
 
     .btn-group-options {
@@ -63,11 +62,11 @@
   }
 
   .input-block.log-timestamps {
-    padding: (@component-padding / 2);
-    min-width: @min-width;
+    padding: calc(var(--component-padding) / 2);
+    min-width: var(--log-min-width);
 
     .log-timestamps-line {
-      border-bottom: 2px solid @item-color;
+      border-bottom: 2px solid var(--log-item-color);
       width: 100%;
       margin-bottom: 9px;
     }
@@ -82,9 +81,9 @@
     }
 
     .icon {
-      color: @item-color;
+      color: var(--log-item-color);
 
-      &:before {
+      &::before {
         width: 10px;
         margin-right: 0;
       }
@@ -92,12 +91,14 @@
   }
 
   .close-button {
-    margin-left: @component-padding;
+    margin-left: var(--component-padding);
     cursor: pointer;
-    color: @text-color-subtle;
+    color: var(--text-color-subtle);
+
     &:hover {
-      color: @text-color-highlight;
+      color: var(--text-color-highlight);
     }
+
     .icon::before {
       margin-right: 0;
       text-align: center;
@@ -109,12 +110,12 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    min-width: @min-width;
+    min-width: var(--log-min-width);
 
     .input-block-item {
       display: flex;
-      flex: 1 1 @item-width;
-      padding: (@component-padding / 2);
+      flex: 1 1 var(--log-item-width);
+      padding: calc(var(--component-padding) / 2);
 
       .btn-group {
         display: flex;
@@ -122,29 +123,27 @@
     }
 
     .input-block-item--flex {
-      flex: 100 1 @item-width;
+      flex: 100 1 var(--log-item-width);
     }
 
     .btn-group {
       display: flex;
-      flex: 1;
+      flex: 1 1 var(--log-item-width);
+
       .btn {
         flex: 1;
       }
-      & + .btn-group {
-        margin-left: @component-padding;
-      }
-    }
 
-    .btn-group {
-      flex: 1 1 @item-width;
+      & + .btn-group {
+        margin-left: var(--component-padding);
+      }
     }
   }
 
   .filter-container {
     .editor-container {
       flex: 1 1 auto;
-      min-width: @min-width;
+      min-width: var(--log-min-width);
     }
 
     .input-block-item:not(.editor-container) {
@@ -158,6 +157,7 @@
 
   .editor-container {
     position: relative;
+
     atom-text-editor {
       width: 100%;
     }
