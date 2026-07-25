@@ -7,10 +7,11 @@
     "url": "https://github.com/lumine-code/language-log/issues"
   },
   "keywords": [
-    "log",
-    "syntax",
-    "highlight",
-    "syslog"
+    "syslog",
+    "logfile",
+    "filter",
+    "tail",
+    "monitoring"
   ],
   "version": "1.0.0",
   "license": "MIT",
