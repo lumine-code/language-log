@@ -1,7 +1,7 @@
 {
   "name": "language-log",
   "author": "lumine-code",
-  "description": "Log syntax highlighting with an inline filter panel.",
+  "description": "Syntax highlighting for log files.",
   "repository": "https://github.com/lumine-code/language-log",
   "bugs": {
     "url": "https://github.com/lumine-code/language-log/issues"
@@ -9,52 +9,20 @@
   "keywords": [
     "syslog",
     "logfile",
-    "filter",
-    "tail",
-    "monitoring"
+    "apache",
+    "android",
+    "output"
   ],
-  "version": "1.0.0",
+  "version": "2.0.0",
   "license": "MIT",
   "engines": {
     "atom": ">=1.100.0 <2.0.0"
   },
-  "main": "./lib/main",
   "scripts": {
     "test": "cd ../lumine && npm run test:only -- ../language-log/spec",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
-  },
-  "configSchema": {
-    "showFilterBar": {
-      "title": "Show filter bar",
-      "description": "Automatically show the log filter panel when the active editor uses the Log grammar.",
-      "type": "boolean",
-      "default": true
-    },
-    "adjacentLines": {
-      "title": "Adjacent visible lines",
-      "description": "Keep this many lines visible before and after each text filter match.",
-      "type": "integer",
-      "minimum": 0,
-      "default": 0
-    },
-    "foldPosition": {
-      "title": "Fold position",
-      "description": "Choose where folded hidden lines are anchored in the editor.",
-      "type": "string",
-      "enum": [
-        {
-          "value": "end-of-line",
-          "description": "At the end of the line before the hidden block."
-        },
-        {
-          "value": "between-lines",
-          "description": "Between the visible lines around the hidden block."
-        }
-      ],
-      "default": "end-of-line"
-    }
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

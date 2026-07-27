@@ -1,6 +1,4 @@
-atom-text-editor.editor .syntax--log,
-.language-log-view .input-block,
-.language-log-view .btn-group-options {
+atom-text-editor.editor .syntax--log {
   .syntax--log-error,
   .syntax--log-failed {
     color: var(--text-color-error);
