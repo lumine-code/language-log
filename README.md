@@ -6,7 +6,7 @@ Log levels are marked with the `definition.log.log-*` scopes, which the `log-fil
 
 ## Features
 
-- **Grammars**: provides TextMate grammars.
+- **Grammars**: provides TextMate grammars maintained here.
 - **Log grammar**: highlights common log formats including generic logs, syslog, Apache, Android, iOS, Python, npm, JBoss, CBS, and other application logs.
 - **Log levels**: colors verbose, info, debug, warning, and error lines apart from the rest.
 - **Timestamps**: recognizes the timestamp of a line across the supported formats.
