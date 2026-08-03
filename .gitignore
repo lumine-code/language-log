@@ -22,3 +22,9 @@ Thumbs.db
 .idea/
 .vscode/
 *.sublime-workspace
+
+# Everything under spec/fixtures is content, whatever its extension. This
+# package's own sample is a .log file, so `*.log` above had been silently
+# keeping it out of the repository — `git add` said nothing, and CI opened a
+# path that did not exist.
+!spec/fixtures/**
