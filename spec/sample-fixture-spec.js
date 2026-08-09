@@ -7,11 +7,11 @@ const path = require("path");
 
 describe("Log sample fixtures", () => {
   beforeEach(async () => {
-    await atom.packages.activatePackage("language-log");
+    await lumine.packages.activatePackage("language-log");
   });
 
   it("tokenizes sample.log", async () => {
-    const editor = await atom.workspace.open(path.join(__dirname, "fixtures", "sample.log"));
+    const editor = await lumine.workspace.open(path.join(__dirname, "fixtures", "sample.log"));
 
     expect(editor.getGrammar().scopeName).toBe("source.log");
 

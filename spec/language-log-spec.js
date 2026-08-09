@@ -1,26 +1,26 @@
 describe("language-log", () => {
   beforeEach(async () => {
-    await atom.packages.activatePackage("language-log");
+    await lumine.packages.activatePackage("language-log");
   });
 
   const tokenizeLine = (line) =>
-    atom.grammars.grammarForScopeName("source.log").tokenizeLine(line).tokens;
+    lumine.grammars.grammarForScopeName("source.log").tokenizeLine(line).tokens;
 
   const scopesOf = (line) => tokenizeLine(line).flatMap((token) => token.scopes);
 
   it("loads the Log grammar", () => {
-    const grammar = atom.grammars.grammarForScopeName("source.log");
+    const grammar = lumine.grammars.grammarForScopeName("source.log");
     expect(grammar).toBeTruthy();
     expect(grammar.name).toBe("Log");
   });
 
   it("selects the Log grammar for log files", () => {
-    expect(atom.grammars.selectGrammar("output.log", "").scopeName).toBe("source.log");
-    expect(atom.grammars.selectGrammar("messages.syslog", "").scopeName).toBe("source.log");
+    expect(lumine.grammars.selectGrammar("output.log", "").scopeName).toBe("source.log");
+    expect(lumine.grammars.selectGrammar("messages.syslog", "").scopeName).toBe("source.log");
   });
 
   it("turns soft wrap off for log files", () => {
-    expect(atom.config.get("language.softWrap", { scope: [".source.log"] })).toBe(false);
+    expect(lumine.config.get("language.softWrap", { scope: [".source.log"] })).toBe(false);
   });
 
   describe("log levels", () => {
