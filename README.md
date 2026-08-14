@@ -14,7 +14,7 @@ Log levels are marked with the `definition.log.log-*` scopes, which the `log-fil
 
 ## Installation
 
-To install `language-log` search for _language-log_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/language-log`.
+To install `language-log` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/language-log`.
 
 ## Contributing
 
