@@ -20,7 +20,7 @@ describe("language-log", () => {
   });
 
   it("turns soft wrap off for log files", () => {
-    expect(lumine.config.get("language.softWrap", { scope: [".source.log"] })).toBe(false);
+    expect(lumine.config.get("editor.softWrap", { scope: [".source.log"] })).toBe(false);
   });
 
   describe("log levels", () => {
