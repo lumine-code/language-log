@@ -6,7 +6,7 @@
   "fileTypes": ["erg", "lst", "prt", "urs"],
   "treeSitter": {
     "parserSource": "github:Tudyx/tree-sitter-log#62cfe307e942af3417171243b599cc7deac5eab9",
-    "wasmBuildTool": "tree-sitter-cli#v0.26.13",
+    "wasmBuildTool": "tree-sitter-cli#v0.27.0",
     "grammar": "log.wasm",
     "highlightsQuery": "sofistik-output-highlights.scm"
   }
