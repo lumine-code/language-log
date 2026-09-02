@@ -1,0 +1,13 @@
+{
+  "name": "SOFiSTiK Output",
+  "scopeName": "text.sofistik-output",
+  "type": "tree-sitter",
+  "parser": "tree-sitter-log",
+  "fileTypes": ["erg", "lst", "prt", "urs"],
+  "treeSitter": {
+    "parserSource": "github:Tudyx/tree-sitter-log#62cfe307e942af3417171243b599cc7deac5eab9",
+    "wasmBuildTool": "tree-sitter-cli#v0.26.13",
+    "grammar": "log.wasm",
+    "highlightsQuery": "sofistik-output-highlights.scm"
+  }
+}
