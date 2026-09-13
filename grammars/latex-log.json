@@ -3,6 +3,7 @@
   "scopeName": "text.log.latex",
   "type": "tree-sitter",
   "parser": "tree-sitter-log",
+  "injectionNames": ["latex-log"],
   "firstLineRegex": ["^This is (?:e-p|e-up|Lua|pdf|Xe)?TeXk?, Version "],
   "contentRegex": "^This is (?:e-p|e-up|Lua|pdf|Xe)?TeXk?, Version ",
   "fileTypes": ["log"],

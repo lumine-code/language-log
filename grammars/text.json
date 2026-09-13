@@ -3,6 +3,7 @@
   "scopeName": "text.plain",
   "type": "tree-sitter",
   "parser": "tree-sitter-log",
+  "injectionNames": ["text", "plain", "plaintext"],
   "fileTypes": ["txt"],
   "treeSitter": {
     "parserSource": "github:Tudyx/tree-sitter-log#62cfe307e942af3417171243b599cc7deac5eab9",

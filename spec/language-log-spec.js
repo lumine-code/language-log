@@ -8,6 +8,7 @@ const VARIANTS = [
     text: "2026-08-03 09:14:02 INFO service started\n",
     position: [0, 22],
     capture: "keyword.other.log.log-info",
+    injectionNames: ["log"],
   },
   {
     scopeName: "text.junit-test-report",
@@ -15,6 +16,7 @@ const VARIANTS = [
     text: "Testsuite: com.example.Sample\nTestcase: passes took 0.12 sec\nERROR failed\n",
     position: [0, 2],
     capture: "entity.name.type.testsuite.junit-test-report",
+    injectionNames: ["junit-report"],
   },
   {
     scopeName: "text.log.latex",
@@ -22,6 +24,7 @@ const VARIANTS = [
     text: "This is pdfTeX, Version 3.141592653\nOverfull box\n",
     position: [1, 2],
     capture: "keyword.control.hyphenation.log.latex",
+    injectionNames: ["latex-log"],
   },
   {
     scopeName: "text.python.traceback",
@@ -29,6 +32,7 @@ const VARIANTS = [
     text: 'Traceback (most recent call last):\n  File "app.py", line 7\nValueError: bad value\n',
     position: [0, 2],
     capture: "keyword.control.exception.python-traceback",
+    injectionNames: ["python-traceback", "pytb"],
   },
   {
     scopeName: "text.sofistik-output",
@@ -36,6 +40,7 @@ const VARIANTS = [
     text: "ERROR calculation failed\n",
     position: [0, 2],
     capture: "invalid.illegal.sofistik-output",
+    injectionNames: ["sofistik-output"],
   },
   {
     scopeName: "text.plain",
@@ -43,6 +48,7 @@ const VARIANTS = [
     text: "Plain text paragraph.\n",
     position: [0, 0],
     capture: "meta.paragraph.text",
+    injectionNames: ["text", "plain", "plaintext"],
   },
 ];
 
@@ -112,6 +118,16 @@ describe("Log Tree-sitter grammar family", () => {
     expect(lumine.grammars.selectGrammar("output.log", "").scopeName).toBe("source.log");
     expect(lumine.grammars.selectGrammar("messages.syslog", "").scopeName).toBe("source.log");
     expect(lumine.config.get("editor.softWrap", { scope: [".source.log"] })).toBe(false);
+  });
+
+  it("registers an unambiguous injection name for every variant", () => {
+    for (const { scopeName, injectionNames } of VARIANTS) {
+      const grammar = lumine.grammars.grammarForScopeName(scopeName);
+      expect(grammar.injectionNames).toEqual(injectionNames);
+      for (const name of injectionNames) {
+        expect(lumine.grammars.treeSitterGrammarForLanguageString(name)).toBe(grammar);
+      }
+    }
   });
 
   it("hosts TODO highlighting on parsed log tokens", async () => {

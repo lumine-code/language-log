@@ -3,6 +3,7 @@
   "scopeName": "text.junit-test-report",
   "type": "tree-sitter",
   "parser": "tree-sitter-log",
+  "injectionNames": ["junit-report"],
   "firstLineRegex": ["^Testsuite:"],
   "contentRegex": "^Testsuite:",
   "fileTypes": ["txt"],

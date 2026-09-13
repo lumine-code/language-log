@@ -3,6 +3,7 @@
   "scopeName": "text.sofistik-output",
   "type": "tree-sitter",
   "parser": "tree-sitter-log",
+  "injectionNames": ["sofistik-output"],
   "fileTypes": ["erg", "lst", "prt", "urs"],
   "treeSitter": {
     "parserSource": "github:Tudyx/tree-sitter-log#62cfe307e942af3417171243b599cc7deac5eab9",

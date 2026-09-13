@@ -3,6 +3,7 @@
   "scopeName": "text.python.traceback",
   "type": "tree-sitter",
   "parser": "tree-sitter-log",
+  "injectionNames": ["python-traceback", "pytb"],
   "firstLineRegex": ["^Traceback \\(most recent call last\\):"],
   "fileTypes": ["pytb"],
   "treeSitter": {
