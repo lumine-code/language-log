@@ -72,6 +72,42 @@ describe("Log Tree-sitter grammar family", () => {
     );
   });
 
+  it("highlights Chromium log headers without absorbing the severity", async () => {
+    const editor = await lumine.workspace.open("chromium.log");
+    editor.setText(
+      "[0620/092918.288:ERROR:registration_protocol_win.cc(108)] CreateFile failed (0x2)\n" +
+        "RROR is ordinary text without the Chromium timestamp prefix\n",
+    );
+    await editor.languageMode.ready;
+
+    for (const column of [17, 21]) {
+      expect(editor.scopeDescriptorForBufferPosition([0, column]).getScopesArray()).toContain(
+        "keyword.other.log.log-error",
+      );
+    }
+    expect(editor.scopeDescriptorForBufferPosition([0, 1]).getScopesArray()).toContain(
+      "constant.other.timestamp.log",
+    );
+    expect(editor.scopeDescriptorForBufferPosition([0, 1]).getScopesArray()).not.toContain(
+      "constant.numeric.log",
+    );
+    expect(editor.scopeDescriptorForBufferPosition([0, 23]).getScopesArray()).toContain(
+      "string.unquoted.filename.log",
+    );
+    expect(editor.scopeDescriptorForBufferPosition([0, 52]).getScopesArray()).toContain(
+      "constant.numeric.line-number.log",
+    );
+    expect(editor.scopeDescriptorForBufferPosition([0, 79]).getScopesArray()).toContain(
+      "constant.numeric.log",
+    );
+    expect(editor.scopeDescriptorForBufferPosition([0, 79]).getScopesArray()).not.toContain(
+      "constant.numeric.line-number.log",
+    );
+    expect(editor.scopeDescriptorForBufferPosition([1, 0]).getScopesArray()).not.toContain(
+      "keyword.other.log.log-error",
+    );
+  });
+
   it("claims log and syslog files and disables soft wrap", () => {
     expect(lumine.grammars.selectGrammar("output.log", "").scopeName).toBe("source.log");
     expect(lumine.grammars.selectGrammar("messages.syslog", "").scopeName).toBe("source.log");
