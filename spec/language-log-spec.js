@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const packagePath = (name) => path.resolve(__dirname, "..", "..", name);
 
 const VARIANTS = [
   {
@@ -131,7 +132,7 @@ describe("Log Tree-sitter grammar family", () => {
   });
 
   it("hosts TODO highlighting on parsed log tokens", async () => {
-    await lumine.packages.activatePackage("language-todo");
+    await lumine.packages.activatePackage(packagePath("language-todo"));
     const editor = await lumine.workspace.open("tasks.log");
     editor.setText("TODO repair this step\n");
     await editor.languageMode.ready;
