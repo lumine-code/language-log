@@ -2,7 +2,7 @@
   "name": "language-log",
   "author": "lumine-code",
   "main": "lib/main",
-  "description": "Log, report, traceback, and plain-text language support.",
+  "description": "Log, report, and traceback language support.",
   "repository": "https://github.com/lumine-code/language-log",
   "bugs": {
     "url": "https://github.com/lumine-code/language-log/issues"
@@ -12,9 +12,7 @@
     "traceback",
     "syslog",
     "sofistik",
-    "plaintext",
     "pytb",
-    "txt",
     "tree-sitter"
   ],
   "version": "1.0.0",

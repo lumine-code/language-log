@@ -1,13 +1,13 @@
 # language-log
 
-Log, report, traceback, and plain-text language support.
+Log, report, and traceback language support.
 
 Log levels are marked with the `keyword.other.log.log-*` scopes, which the `log-filter` package uses to hide lines by severity.
 
 ## Features
 
 - **Grammars**: provides Tree-sitter grammars built from [tree-sitter-log](https://github.com/Tudyx/tree-sitter-log).
-- **Formats**: handles generic logs, JUnit reports, LaTeX logs, Python tracebacks, SOFiSTiK output, and plain text.
+- **Formats**: handles generic logs, JUnit reports, LaTeX logs, Python tracebacks, and SOFiSTiK output.
 - **Shared parser**: reuses one compiled parser while preserving format-specific scopes and selection rules.
 - **Log levels**: colors verbose, info, debug, warning, and error lines apart from the rest.
 - **Timestamps**: recognizes the timestamp of a line across the supported formats.

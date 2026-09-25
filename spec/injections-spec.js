@@ -12,7 +12,6 @@ describe("Log grammar injections", () => {
       ["text.log.latex", { types: ["word", "string_literal"] }],
       ["text.python.traceback", { types: ["word", "string_literal"] }],
       ["text.sofistik-output", { types: ["word", "string_literal"] }],
-      ["text.plain", { types: ["word", "string_literal"] }],
     ]);
   });
 });
