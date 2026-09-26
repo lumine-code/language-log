@@ -267,6 +267,105 @@ describe("Log Tree-sitter grammar family", () => {
     });
   }
 
+  it("highlights every semantic leaf exposed by the shared log parser", async () => {
+    const tokens = [
+      { text: "TRACE", name: "trace" },
+      { text: "DEBUG", name: "debug" },
+      { text: "INFO", name: "info" },
+      { text: "WARN", name: "warn" },
+      { text: "ERROR", name: "error" },
+      { text: "2026-09-26", name: "date" },
+      { text: "12:34:56", name: "time" },
+      { text: "true", name: "constant" },
+      { text: "42", name: "number" },
+      { text: '"double"', name: "string", quoted: true },
+      { text: "'single'", name: "string", quoted: true },
+      { text: "`raw`", name: "string", quoted: true },
+    ];
+    const variants = [
+      {
+        scopeName: "source.log",
+        fileName: "semantic.log",
+        prefix: [],
+        scopes: {
+          trace: "keyword.other.log.log-verbose",
+          debug: "keyword.other.log.log-debug",
+          info: "keyword.other.log.log-info",
+          warn: "keyword.other.log.log-warning",
+          error: "keyword.other.log.log-error",
+          date: "constant.other.date.log",
+          time: "constant.other.time.log",
+          constant: "constant.language.log",
+          number: "constant.numeric.log",
+          string: "string.quoted.log",
+          stringBegin: "punctuation.definition.string.begin.log",
+          stringEnd: "punctuation.definition.string.end.log",
+        },
+      },
+      {
+        scopeName: "text.junit-test-report",
+        fileName: "semantic.txt",
+        prefix: ["Testsuite: semantic"],
+        suffix: "junit-test-report",
+      },
+      {
+        scopeName: "text.python.traceback",
+        fileName: "semantic.pytb",
+        prefix: ["Traceback (most recent call last):"],
+        suffix: "python-traceback",
+      },
+      {
+        scopeName: "text.sofistik-output",
+        fileName: "semantic.erg",
+        prefix: [],
+        suffix: "sofistik-output",
+      },
+    ];
+
+    for (const variant of variants) {
+      const suffix = variant.suffix;
+      const scopes = variant.scopes ?? {
+        trace: `support.constant.log-level.trace.${suffix}`,
+        debug: `support.constant.log-level.debug.${suffix}`,
+        info: `support.constant.log-level.info.${suffix}`,
+        warn: `invalid.deprecated.${suffix}`,
+        error: `invalid.illegal.${suffix}`,
+        date: `constant.other.date.${suffix}`,
+        time: `constant.other.time.${suffix}`,
+        constant: `constant.language.${suffix}`,
+        number: `constant.numeric.${suffix}`,
+        string: `string.quoted.${suffix}`,
+        stringBegin: `punctuation.definition.string.begin.${suffix}`,
+        stringEnd: `punctuation.definition.string.end.${suffix}`,
+      };
+      const lines = [...variant.prefix, ...tokens.map(({ text }) => text)];
+      const editor = await lumine.workspace.open(variant.fileName);
+      editor.setText(`${lines.join("\n")}\n`);
+      lumine.grammars.autoAssignLanguageMode(editor.getBuffer());
+      const languageMode = editor.getBuffer().getLanguageMode();
+      await languageMode.ready;
+
+      expect(editor.getGrammar().scopeName).toBe(variant.scopeName);
+      expect(languageMode.tree.rootNode.hasError).toBe(false);
+      for (let index = 0; index < tokens.length; index++) {
+        const token = tokens[index];
+        const row = variant.prefix.length + index;
+        const interiorColumn = token.quoted ? 1 : 0;
+        expect(
+          editor.scopeDescriptorForBufferPosition([row, interiorColumn]).getScopesArray(),
+        ).toContain(scopes[token.name]);
+        if (token.quoted) {
+          expect(editor.scopeDescriptorForBufferPosition([row, 0]).getScopesArray()).toContain(
+            scopes.stringBegin,
+          );
+          expect(
+            editor.scopeDescriptorForBufferPosition([row, token.text.length - 1]).getScopesArray(),
+          ).toContain(scopes.stringEnd);
+        }
+      }
+    }
+  });
+
   it("compiles every highlights query with the intended parser assets", async () => {
     const grammars = VARIANTS.map(({ scopeName }) =>
       lumine.grammars.grammarForScopeName(scopeName),

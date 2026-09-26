@@ -34,6 +34,6 @@
   (#is? test.matchAt "previousNamedSibling \\.(?:c|cc|cpp|cxx|h|hh|hpp|hxx)$"))
 
 ((string_literal) @punctuation.definition.string.begin.log
-  (#set! adjust.startAndEndAroundFirstMatchOf "^[\"']"))
+  (#set! adjust.startAndEndAroundFirstMatchOf "^[\"'`]"))
 ((string_literal) @punctuation.definition.string.end.log
-  (#set! adjust.startAndEndAroundFirstMatchOf "[\"']$"))
+  (#set! adjust.startAndEndAroundFirstMatchOf "[\"'`]$"))
