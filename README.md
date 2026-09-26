@@ -6,9 +6,9 @@ Log levels are marked with the `keyword.other.log.log-*` scopes, which the `log-
 
 ## Features
 
-- **Grammars**: provides Tree-sitter grammars built from [tree-sitter-log](https://github.com/Tudyx/tree-sitter-log).
+- **Grammars**: provides Tree-sitter grammars for generic logs and specialized output formats.
 - **Formats**: handles generic logs, JUnit reports, LaTeX logs, Python tracebacks, and SOFiSTiK output.
-- **Shared parser**: reuses one compiled parser while preserving format-specific scopes and selection rules.
+- **Parser assets**: uses line-oriented parsing for LaTeX and shares one log parser across the other formats.
 - **Log levels**: colors verbose, info, debug, warning, and error lines apart from the rest.
 - **Timestamps**: recognizes the timestamp of a line across the supported formats.
 - **Soft wrap**: turns soft wrap off for log files, so one entry stays one line.

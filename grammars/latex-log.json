@@ -2,15 +2,15 @@
   "name": "LaTeX Log",
   "scopeName": "text.log.latex",
   "type": "tree-sitter",
-  "parser": "tree-sitter-log",
+  "parser": "tree-sitter-plain-text",
   "injectionNames": ["latex-log"],
   "firstLineRegex": ["^This is (?:e-p|e-up|Lua|pdf|Xe)?TeXk?, Version "],
   "contentRegex": "^This is (?:e-p|e-up|Lua|pdf|Xe)?TeXk?, Version ",
   "fileTypes": ["log"],
   "treeSitter": {
-    "parserSource": "github:Tudyx/tree-sitter-log#62cfe307e942af3417171243b599cc7deac5eab9",
+    "parserSource": "github:lumine-code/tree-sitter-plain-text#a2bff6d1c4c9f1fa94cd6387be7ddf57d7500010",
     "wasmBuildTool": "tree-sitter-cli#v0.27.0",
-    "grammar": "log.wasm",
+    "grammar": "plain-text.wasm",
     "highlightsQuery": "latex-log-highlights.scm"
   }
 }

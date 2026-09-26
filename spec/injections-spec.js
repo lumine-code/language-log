@@ -9,7 +9,7 @@ describe("Log grammar injections", () => {
     expect(todo.addInjectionPoint.calls.allArgs()).toEqual([
       ["source.log", { types: ["word", "string_literal"] }],
       ["text.junit-test-report", { types: ["word", "string_literal"] }],
-      ["text.log.latex", { types: ["word", "string_literal"] }],
+      ["text.log.latex", { types: ["line"] }],
       ["text.python.traceback", { types: ["word", "string_literal"] }],
       ["text.sofistik-output", { types: ["word", "string_literal"] }],
     ]);
