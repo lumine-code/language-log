@@ -122,6 +122,16 @@ describe("Log Tree-sitter grammar family", () => {
       "\\GenericError: remains a control sequence.",
       "Overfull \\hbox (1.0pt too wide) in paragraph at lines 10--12",
       "Output written on main.pdf (1 page, 1234 bytes).",
+      "Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.",
+      '(minitoc)             "mtcoffset" as "-1.15em" on input line 552.',
+      "Package example Info: Values 'first' and 'second' were selected.",
+      " *geometry* driver: auto-detecting",
+      " * driver: pdftex",
+      " * layout: <same size as paper>",
+      " * h-part:(L,W,R)=(71.13188pt, 455.24411pt, 71.13188pt)",
+      " * \\paperwidth=597.50787pt",
+      " * \\skip\\footins=12.0pt plus 4.0pt minus 4.0pt",
+      " * \\@twocolumnfalse",
       "",
     ];
     editor.setText(lines.join("\n"));
@@ -166,6 +176,31 @@ describe("Log Tree-sitter grammar family", () => {
     expect(scopesFor(10, "GenericError")).not.toContain("invalid.illegal.log.latex");
     expect(scopesFor(11, "Overfull")).toContain("keyword.control.hyphenation.log.latex");
     expect(scopesFor(12, "Output written on")).toContain("keyword.other.summary.log.latex");
+    expect(scopesFor(13, "cmy")).toContain("string.quoted.single.log.latex");
+    expect(scopesFor(13, "cmy0")).toContain("string.quoted.single.log.latex");
+    expect(scopesFor(14, "mtcoffset")).toContain("string.quoted.double.log.latex");
+    expect(scopesFor(14, "-1.15em")).toContain("string.quoted.double.log.latex");
+    expect(scopesFor(15, "first")).toContain("string.quoted.single.log.latex");
+    expect(scopesFor(15, "second")).toContain("string.quoted.single.log.latex");
+    expect(scopesFor(16, "*geometry*")).toContain("keyword.other.package.log.latex");
+    expect(scopesFor(16, "driver")).toContain("variable.other.key.geometry.log.latex");
+    expect(scopesFor(16, "auto-detecting")).toContain("string.unquoted.value.geometry.log.latex");
+    expect(scopesFor(17, "*")).toContain("punctuation.definition.list.begin.log.latex");
+    expect(scopesFor(17, "driver")).toContain("variable.other.key.geometry.log.latex");
+    expect(scopesFor(17, ":")).toContain("punctuation.separator.key-value.geometry.log.latex");
+    expect(scopesFor(17, "pdftex")).toContain("string.unquoted.value.geometry.log.latex");
+    expect(scopesFor(18, "same size")).toContain("string.quoted.other.log.latex");
+    for (const value of ["71.13188pt", "455.24411pt"]) {
+      expect(scopesFor(19, value)).toContain("constant.numeric.dimension.log.latex");
+    }
+    expect(scopesFor(20, "paperwidth")).toContain("variable.other.control-sequence.log.latex");
+    expect(scopesFor(20, "=")).toContain("keyword.operator.assignment.log.latex");
+    expect(scopesFor(20, "597.50787pt")).toContain("constant.numeric.dimension.log.latex");
+    expect(scopesFor(21, "footins")).toContain("variable.other.control-sequence.log.latex");
+    for (const value of ["12.0pt", "4.0pt"]) {
+      expect(scopesFor(21, value)).toContain("constant.numeric.dimension.log.latex");
+    }
+    expect(scopesFor(22, "@twocolumnfalse")).toContain("support.function.log.latex");
   });
 
   it("claims log and syslog files and disables soft wrap", () => {

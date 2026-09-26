@@ -44,13 +44,67 @@
   (#set! adjust.startAndEndAroundFirstMatchOf "`[^'\\r\\n]+'"))
 
 ((line) @string.quoted.single.log.latex
+  (#match? @string.quoted.single.log.latex "`[^'\\r\\n]+'[^`\\r\\n]*`[^'\\r\\n]+'")
+  (#set! adjust.startAndEndAroundFirstMatchOf "(?<=`[^'\\r\\n]*'[^`\\r\\n]*)`[^'\\r\\n]+'"))
+
+((line) @string.quoted.single.log.latex
   (#match? @string.quoted.single.log.latex "'[^'\\r\\n]+'")
   (#not-match? @string.quoted.single.log.latex "`")
   (#set! adjust.startAndEndAroundFirstMatchOf "'[^'\\r\\n]+'"))
 
+((line) @string.quoted.single.log.latex
+  (#match? @string.quoted.single.log.latex "'[^'\\r\\n]+'[^'\\r\\n]*'[^'\\r\\n]+'")
+  (#not-match? @string.quoted.single.log.latex "`")
+  (#set! adjust.startAndEndAroundFirstMatchOf "(?<='[^'\\r\\n]*'[^'\\r\\n]*)'[^'\\r\\n]+'"))
+
 ((line) @string.quoted.double.log.latex
   (#match? @string.quoted.double.log.latex "\"[^\"\\r\\n]*\"")
   (#set! adjust.startAndEndAroundFirstMatchOf "\"[^\"\\r\\n]*\""))
+
+((line) @string.quoted.double.log.latex
+  (#match? @string.quoted.double.log.latex "\"[^\"\\r\\n]*\"[^\"\\r\\n]*\"[^\"\\r\\n]*\"")
+  (#set! adjust.startAndEndAroundFirstMatchOf "(?<=\"[^\"\\r\\n]*\"[^\"\\r\\n]*)\"[^\"\\r\\n]*\""))
+
+((line) @string.quoted.other.log.latex
+  (#match? @string.quoted.other.log.latex "<[^>\\r\\n]+>")
+  (#set! adjust.startAndEndAroundFirstMatchOf "<[^>\\r\\n]+>"))
+
+; Structured reports emitted by packages such as geometry.
+((line) @keyword.other.package.log.latex
+  (#match? @keyword.other.package.log.latex "^\\s*\\*geometry\\*")
+  (#set! adjust.startAndEndAroundFirstMatchOf "\\*geometry\\*"))
+
+((line) @punctuation.definition.list.begin.log.latex
+  (#match? @punctuation.definition.list.begin.log.latex "^\\s*\\*\\s+")
+  (#set! adjust.startAndEndAroundFirstMatchOf "\\*"))
+
+((line) @variable.other.key.geometry.log.latex
+  (#match? @variable.other.key.geometry.log.latex "^\\s*\\*geometry\\*\\s+[^:]+:")
+  (#set! adjust.startAndEndAroundFirstMatchOf "(?<=\\*geometry\\*\\s)[^:]+(?=:)"))
+
+((line) @variable.other.key.geometry.log.latex
+  (#match? @variable.other.key.geometry.log.latex "^\\s*\\*\\s+[^\\\\:][^:]*:")
+  (#set! adjust.startAndEndAroundFirstMatchOf "(?<=^\\s*\\*\\s)[^:]+(?=:)"))
+
+((line) @punctuation.separator.key-value.geometry.log.latex
+  (#match? @punctuation.separator.key-value.geometry.log.latex "^\\s*\\*(?:geometry\\*\\s+)?[^\\\\:][^:]*:")
+  (#set! adjust.startAndEndAroundFirstMatchOf ":"))
+
+((line) @string.unquoted.value.geometry.log.latex
+  (#match? @string.unquoted.value.geometry.log.latex "^\\s*\\*(?:geometry\\*\\s+)?[^:]+:\\s*[A-Za-z][^=]*$")
+  (#set! adjust.startAndEndAroundFirstMatchOf "(?<=:\\s)[A-Za-z][^\\r\\n]*$"))
+
+((line) @constant.numeric.dimension.log.latex
+  (#match? @constant.numeric.dimension.log.latex "^\\s*\\*.*[0-9]")
+  (#set! adjust.startAndEndAroundFirstMatchOf "[-+]?[0-9]+(?:\\.[0-9]+)?(?:pt|mm|cm|in)?"))
+
+((line) @constant.numeric.dimension.log.latex
+  (#match? @constant.numeric.dimension.log.latex "^\\s*\\*.*[0-9]")
+  (#set! adjust.startAndEndAroundFirstMatchOf "(?<=(?<![0-9.])[-+]?[0-9]+(?:\\.[0-9]+)?(?:pt|mm|cm|in)?(?![0-9.])[^0-9.+\\-\\r\\n]*)(?<![0-9.])[-+]?[0-9]+(?:\\.[0-9]+)?(?:pt|mm|cm|in)?"))
+
+((line) @constant.numeric.dimension.log.latex
+  (#match? @constant.numeric.dimension.log.latex "^\\s*\\*.*[0-9]")
+  (#set! adjust.startAndEndAroundFirstMatchOf "(?<=(?<![0-9.])[-+]?[0-9]+(?:\\.[0-9]+)?(?:pt|mm|cm|in)?(?![0-9.])[^0-9.+\\-\\r\\n]*(?<![0-9.])[-+]?[0-9]+(?:\\.[0-9]+)?(?:pt|mm|cm|in)?(?![0-9.])[^0-9.+\\-\\r\\n]*)(?<![0-9.])[-+]?[0-9]+(?:\\.[0-9]+)?(?:pt|mm|cm|in)?"))
 
 ; Paths, dates, versions, times, and source locations.
 ((line) @string.unquoted.path.log.latex
@@ -88,11 +142,11 @@
 ; Register assignments. LaTeX3 control sequences use underscores and colons,
 ; so stopping at ASCII letters would highlight only the initial \l or \g.
 ((line) @variable.other.control-sequence.log.latex
-  (#match? @variable.other.control-sequence.log.latex "^\\s*\\\\[A-Za-z@:_][A-Za-z0-9@:_]*\\s*=")
-  (#set! adjust.startAndEndAroundFirstMatchOf "\\\\[A-Za-z@:_][A-Za-z0-9@:_]*(?=\\s*=)"))
+  (#match? @variable.other.control-sequence.log.latex "^\\s*(?:\\*\\s*)?(?:\\\\[A-Za-z@:_][A-Za-z0-9@:_]*)+\\s*=")
+  (#set! adjust.startAndEndAroundFirstMatchOf "(?:\\\\[A-Za-z@:_][A-Za-z0-9@:_]*)+(?=\\s*=)"))
 
 ((line) @keyword.operator.assignment.log.latex
-  (#match? @keyword.operator.assignment.log.latex "^\\s*\\\\[A-Za-z@:_][A-Za-z0-9@:_]*\\s*=")
+  (#match? @keyword.operator.assignment.log.latex "^\\s*(?:\\*\\s*)?(?:\\\\[A-Za-z@:_][A-Za-z0-9@:_]*)+\\s*=")
   (#set! adjust.startAndEndAroundFirstMatchOf "="))
 
 ((line) @support.type.register.log.latex
@@ -105,8 +159,8 @@
 
 ; Other control sequences use the same support-function scope as LaTeX source.
 ((line) @support.function.log.latex
-  (#match? @support.function.log.latex "^\\s*\\\\(?:[A-Za-z@:_][A-Za-z0-9@:_]*|\\S)")
-  (#not-match? @support.function.log.latex "^\\s*\\\\[A-Za-z@:_][A-Za-z0-9@:_]*\\s*=")
+  (#match? @support.function.log.latex "^\\s*(?:\\*\\s*)?\\\\(?:[A-Za-z@:_][A-Za-z0-9@:_]*|\\S)")
+  (#not-match? @support.function.log.latex "^\\s*(?:\\*\\s*)?(?:\\\\[A-Za-z@:_][A-Za-z0-9@:_]*)+\\s*=")
   (#set! adjust.startAndEndAroundFirstMatchOf "\\\\(?:[A-Za-z@:_][A-Za-z0-9@:_]*|\\S)"))
 
 ((line) @support.function.log.latex
