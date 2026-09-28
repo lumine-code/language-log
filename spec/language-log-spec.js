@@ -55,7 +55,7 @@ describe("Log Tree-sitter grammar family", () => {
     await languageMode.ready;
 
     expect(editor.getGrammar().scopeName).toBe("source.log");
-    expect(languageMode.tree.rootNode.hasError).toBe(false);
+    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
     expect(editor.scopeDescriptorForBufferPosition([0, 25]).getScopesArray()).toContain(
       "keyword.other.log.log-info",
     );
@@ -146,8 +146,9 @@ describe("Log Tree-sitter grammar family", () => {
     };
 
     expect(editor.getGrammar().scopeName).toBe("text.log.latex");
-    expect(languageMode.tree.rootNode.hasError).toBe(false);
-    expect(languageMode.tree.rootNode.descendantsOfType("string_literal")).toEqual([]);
+    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
+    const root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
+    expect(root.descendantsOfType("string_literal")).toEqual([]);
 
     expect(scopesFor(0, "3.141")).toContain("constant.other.version.log.latex");
     expect(scopesFor(0, "8 JAN 2026")).toContain("constant.other.date.log.latex");
@@ -346,7 +347,7 @@ describe("Log Tree-sitter grammar family", () => {
       await languageMode.ready;
 
       expect(editor.getGrammar().scopeName).toBe(variant.scopeName);
-      expect(languageMode.tree.rootNode.hasError).toBe(false);
+      expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
       for (let index = 0; index < tokens.length; index++) {
         const token = tokens[index];
         const row = variant.prefix.length + index;
