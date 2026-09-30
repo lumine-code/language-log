@@ -55,7 +55,9 @@ describe("Log Tree-sitter grammar family", () => {
     await languageMode.ready;
 
     expect(editor.getGrammar().scopeName).toBe("source.log");
-    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
+    expect(editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => !node.parent).hasError).toBe(
+      false,
+    );
     expect(editor.scopeDescriptorForBufferPosition([0, 25]).getScopesArray()).toContain(
       "keyword.other.log.log-info",
     );
@@ -146,7 +148,9 @@ describe("Log Tree-sitter grammar family", () => {
     };
 
     expect(editor.getGrammar().scopeName).toBe("text.log.latex");
-    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
+    expect(editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => !node.parent).hasError).toBe(
+      false,
+    );
     const root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
     expect(root.descendantsOfType("string_literal")).toEqual([]);
 
@@ -347,7 +351,9 @@ describe("Log Tree-sitter grammar family", () => {
       await languageMode.ready;
 
       expect(editor.getGrammar().scopeName).toBe(variant.scopeName);
-      expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
+      expect(editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => !node.parent).hasError).toBe(
+        false,
+      );
       for (let index = 0; index < tokens.length; index++) {
         const token = tokens[index];
         const row = variant.prefix.length + index;
@@ -371,9 +377,13 @@ describe("Log Tree-sitter grammar family", () => {
     const grammars = VARIANTS.map(({ scopeName }) =>
       lumine.grammars.grammarForScopeName(scopeName),
     );
-    const wasmPaths = new Set(grammars.map((grammar) => grammar.treeSitterGrammarPath));
-    const sharedWasmPath = path.join(__dirname, "..", "grammars", "log.wasm");
-    const latexWasmPath = path.join(__dirname, "..", "grammars", "plain-text.wasm");
+    const wasmPaths = new Set(
+      grammars.map((grammar) => fs.realpathSync(grammar.treeSitterGrammarPath)),
+    );
+    const sharedWasmPath = fs.realpathSync(path.join(__dirname, "..", "grammars", "log.wasm"));
+    const latexWasmPath = fs.realpathSync(
+      path.join(__dirname, "..", "grammars", "plain-text.wasm"),
+    );
 
     expect(wasmPaths).toEqual(new Set([sharedWasmPath, latexWasmPath]));
     expect(fs.existsSync(sharedWasmPath)).toBe(true);
@@ -381,10 +391,12 @@ describe("Log Tree-sitter grammar family", () => {
     expect(
       grammars
         .filter((grammar) => grammar.scopeName !== "text.log.latex")
-        .every((grammar) => grammar.treeSitterGrammarPath === sharedWasmPath),
+        .every((grammar) => fs.realpathSync(grammar.treeSitterGrammarPath) === sharedWasmPath),
     ).toBe(true);
     expect(
-      grammars.find((grammar) => grammar.scopeName === "text.log.latex").treeSitterGrammarPath,
+      fs.realpathSync(
+        grammars.find((grammar) => grammar.scopeName === "text.log.latex").treeSitterGrammarPath,
+      ),
     ).toBe(latexWasmPath);
     for (const grammar of grammars) {
       expect(await grammar.getQuery("highlightsQuery")).toBeTruthy();
