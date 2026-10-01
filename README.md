@@ -17,10 +17,6 @@ Log levels are marked with the `keyword.other.log.log-*` scopes, which the `log-
 
 To install `language-log` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/language-log`.
 
-## Services
-
-- `todo.injection`: consumed to highlight task annotations in log output.
-
 ## Contributing
 
 Got ideas to make this package better, found a bug, or want to help add new features? Just drop your thoughts on GitHub. Any feedback is welcome!
