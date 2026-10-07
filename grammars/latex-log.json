@@ -8,9 +8,12 @@
   "contentRegex": "^This is (?:e-p|e-up|Lua|pdf|Xe)?TeXk?, Version ",
   "fileTypes": ["log"],
   "treeSitter": {
-    "parserSource": "github:lumine-code/tree-sitter-plain-text#8ff438fc2f0086bef5358ee8e0eec683ba5741d0",
+    "parserSource": "github:lumine-code/tree-sitter-plain-text#d09951812cbdbae67b5b19dc5864f7f29b5b0625",
     "wasmBuildTool": "tree-sitter-cli#v0.27.0",
     "grammar": "plain-text.wasm",
+    "parseBoundariesQuery": "latex-log-parse-boundaries.scm",
+    "parseBoundariesMaxStartDepth": 1,
+    "parseBoundariesInjections": true,
     "highlightsQuery": "latex-log-highlights.scm",
     "injectionsQuery": "latex-log-injections.scm"
   }

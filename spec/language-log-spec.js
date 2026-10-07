@@ -214,6 +214,63 @@ describe("Log Tree-sitter grammar family", () => {
     expect(lumine.config.get("editor.softWrap", { scope: [".source.log"] })).toBe(false);
   });
 
+  it("keeps LaTeX line scopes and TODO injection across an incremental Enter", async () => {
+    jasmine.useRealClock();
+    await lumine.packages.activatePackage("language-todo");
+    const editor = await lumine.workspace.open("latex-boundaries.log");
+    editor.setGrammar(lumine.grammars.grammarForScopeName("text.log.latex"));
+    editor.setText(
+      "This is pdfTeX, Version 3.141592653\n" +
+        "alpha\n".repeat(600) +
+        "Overfull box\nTODO retained\n",
+    );
+    try {
+      await editor.whenGrammarSettled();
+      const mode = editor.getBuffer().getLanguageMode();
+      expect(mode.rootLanguageLayer.queries.parseBoundariesQuery).toBeDefined();
+      const calls = [];
+      const original = mode.parseAsync.bind(mode);
+      spyOn(mode, "parseAsync").and.callFake((language, oldTree, ranges, options) => {
+        if (oldTree && language === mode.rootLanguageLayer.language) calls.push(ranges);
+        return original(language, oldTree, ranges, options);
+      });
+      editor.setTextInBufferRange(
+        [
+          [1, 2],
+          [1, 2],
+        ],
+        "\n",
+      );
+      await editor.whenGrammarSettled();
+
+      expect(calls.length).toBeGreaterThan(0);
+      expect(calls.at(-1).length).toBeGreaterThan(1);
+      const root = mode.rootLanguageLayer.tree.rootNode;
+      expect(root.hasError).toBe(false);
+      expect(root.descendantsOfType("paragraph").length).toBe(1);
+      expect(root.descendantsOfType("line").length).toBe(604);
+      for (const [row, text] of [
+        [1, "al"],
+        [2, "pha"],
+      ]) {
+        expect(
+          editor.getSyntaxNodeAtBufferPosition([row, 0], (node) => node.type === "line").text,
+        ).toBe(text);
+      }
+      expect(editor.scopeDescriptorForBufferPosition([0, 24]).getScopesArray()).toContain(
+        "constant.other.version.log.latex",
+      );
+      expect(editor.scopeDescriptorForBufferPosition([602, 0]).getScopesArray()).toContain(
+        "keyword.control.hyphenation.log.latex",
+      );
+      expect(editor.scopeDescriptorForBufferPosition([603, 0]).getScopesArray()).toContain(
+        "storage.type.class.todo",
+      );
+    } finally {
+      editor.destroy();
+    }
+  });
+
   it("registers an unambiguous injection name for every variant", () => {
     for (const { scopeName, injectionNames } of VARIANTS) {
       const grammar = lumine.grammars.grammarForScopeName(scopeName);
@@ -401,5 +458,7 @@ describe("Log Tree-sitter grammar family", () => {
     for (const grammar of grammars) {
       expect(await grammar.getQuery("highlightsQuery")).toBeTruthy();
     }
+    const latex = grammars.find((grammar) => grammar.scopeName === "text.log.latex");
+    expect(await latex.getQuery("parseBoundariesQuery")).toBeTruthy();
   });
 });
