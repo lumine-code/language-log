@@ -1,0 +1,16 @@
+{
+  "title": "language-log",
+  "description": "Log syntax highlighting in the editor.",
+  "recordedOn": "2026-10-13",
+  "sourceRevision": "89f1cc85810d8ab6e9c24834d3c7a22db42501a4",
+  "mode": "normal",
+  "fontSettings": "default",
+  "images": [
+    {
+      "file": "demo.png",
+      "label": "Log syntax highlighting at the default editor font size.",
+      "width": 1100,
+      "height": 516
+    }
+  ]
+}

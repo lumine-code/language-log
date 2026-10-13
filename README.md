@@ -13,6 +13,8 @@ Log levels are marked with the `keyword.other.log.log-*` scopes, which the `log-
 - **Timestamps**: recognizes the timestamp of a line across the supported formats.
 - **Soft wrap**: turns soft wrap off for log files, so one entry stays one line.
 
+![Log syntax highlighting at the default editor font size.](.github/demo.png)
+
 ## Installation
 
 To install `language-log` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/language-log`.
