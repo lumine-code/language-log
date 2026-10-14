@@ -1,0 +1,18 @@
+2026-08-03 09:14:02.117 INFO  [main] app.Bootstrap - starting sample 1.0.0 (pid 4821)
+2026-08-03 09:14:02.284 DEBUG [main] app.Config - loaded 14 keys from /etc/sample/app.toml
+2026-08-03 09:14:02.512 INFO  [main] app.Server - listening on http://0.0.0.0:8080
+2026-08-03 09:14:07.903 TRACE [http-1] app.Router - GET /healthz -> 200 in 0.4ms
+2026-08-03 09:15:31.045 WARN  [http-3] app.Auth - token expired for user 4821, refreshing
+2026-08-03 09:15:31.290 ERROR [http-3] app.Db - connection refused: 127.0.0.1:5432
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at app.Db.connect(Db.java:118)
+	at app.Router.handle(Router.java:64)
+2026-08-03 09:15:36.301 INFO  [http-3] app.Db - reconnected after 5.0s (attempt 2/3)
+2026-08-03 09:16:00.000 INFO  [cron] app.Reaper - swept 128 sessions, 3 expired
+2026-08-03 09:18:44.771 FATAL [main] app.Bootstrap - unrecoverable: disk full on /var/lib/sample
+
+127.0.0.1 - - [03/Aug/2026:09:14:07 +0200] "GET /healthz HTTP/1.1" 200 2 "-" "curl/8.6.0"
+127.0.0.1 - ada [03/Aug/2026:09:15:31 +0200] "POST /api/orders HTTP/1.1" 500 173 "-" "Mozilla/5.0"
+
+[2026-08-03T09:20:11Z] notice: sample.service: Succeeded.
