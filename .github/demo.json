@@ -1,16 +1,61 @@
 {
   "title": "language-log",
-  "description": "Log syntax highlighting in the editor.",
-  "recordedOn": "2026-10-13",
-  "sourceRevision": "89f1cc85810d8ab6e9c24834d3c7a22db42501a4",
+  "description": "Log syntax highlighting at the default editor font size.",
+  "recordedOn": "2026-10-14",
+  "sourceRevision": "f6cebec3466b23f92007384ac19e97367774c2c9",
+  "themeSourceRevision": "14a69683b0e3238e2bc128fbfae3866c1e4ee9c6",
   "mode": "normal",
   "fontSettings": "default",
+  "scenario": "demo.js",
+  "recipeHash": "cc0126f1f8f5d1e376138e8ba869edd281befd7e050321b32cf7e8cd0f7a0669",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "electron": "44.7.0",
+    "chrome": "152.0.7977.130",
+    "devicePixelRatio": 1,
+    "locale": "en-GB",
+    "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
+    "fontSize": 14,
+    "themes": ["one-day-syntax", "one-day-ui"]
+  },
+  "viewport": { "width": 1100, "height": 516 },
+  "cornerRadius": 10,
+  "sources": {
+    "editor": {
+      "revision": "c4d7a05fe6960ae6fb041981d6cf13e9c0286b17",
+      "dirty": true,
+      "workingTreeHash": "c8c1ecbfffafd0d4ca1f3ef718222e809b0d3f3aabe3d890d222f58976eb8817"
+    },
+    "package": {
+      "revision": "f6cebec3466b23f92007384ac19e97367774c2c9",
+      "dirty": true,
+      "workingTreeHash": "d7c2d122a164f9cd098f869d091f4f4bf18e2a1d29351685a29b3d558a1eb397"
+    },
+    "language-log": {
+      "revision": "f6cebec3466b23f92007384ac19e97367774c2c9",
+      "dirty": true,
+      "workingTreeHash": "d7c2d122a164f9cd098f869d091f4f4bf18e2a1d29351685a29b3d558a1eb397"
+    },
+    "one-theme": {
+      "revision": "14a69683b0e3238e2bc128fbfae3866c1e4ee9c6",
+      "dirty": true,
+      "workingTreeHash": "50ec2f83a6347dd8113870992ec4eb2be4014f3d9e12213c2f51b543f1eca793"
+    }
+  },
+  "fixtures": [
+    {
+      "file": "example.log",
+      "sha256": "a9b4c223cc72d98ddce54ab7084caa5d9172a7294d37a639e5e2a7f9f4212c5d"
+    }
+  ],
   "images": [
     {
       "file": "demo.png",
       "label": "Log syntax highlighting at the default editor font size.",
       "width": 1100,
-      "height": 516
+      "height": 516,
+      "sha256": "33d78cb390a1045af650655e5acf45315847d6b7615b60bf287b529080ac161f"
     }
   ]
 }
