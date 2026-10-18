@@ -229,8 +229,8 @@ describe("Log Tree-sitter grammar family", () => {
       const mode = editor.getBuffer().getLanguageMode();
       expect(mode.rootLanguageLayer.queries.parseBoundariesQuery).toBeDefined();
       const calls = [];
-      const original = mode.parseAsync.bind(mode);
-      spyOn(mode, "parseAsync").and.callFake((language, oldTree, ranges, options) => {
+      const original = mode.parse.bind(mode);
+      spyOn(mode, "parse").and.callFake((language, oldTree, ranges, options) => {
         if (oldTree && language === mode.rootLanguageLayer.language) calls.push(ranges);
         return original(language, oldTree, ranges, options);
       });
