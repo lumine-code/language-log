@@ -7,7 +7,7 @@
   "fileTypes": ["log", "syslog", "out", "output"],
   "treeSitter": {
     "parserSource": "github:Tudyx/tree-sitter-log#62cfe307e942af3417171243b599cc7deac5eab9",
-    "wasmBuildTool": "tree-sitter-cli#v0.27.0",
+    "wasmBuildTool": "tree-sitter-cli#v0.27.1",
     "grammar": "log.wasm",
     "highlightsQuery": "log-highlights.scm",
     "injectionsQuery": "log-injections.scm"
