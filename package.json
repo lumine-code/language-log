@@ -27,7 +27,8 @@
     "lumine": "^1.0.0"
   },
   "specPackages": [
-    "language-todo"
+    "language-todo",
+    "language-source"
   ],
   "scripts": {
     "test": "lumine --test spec",

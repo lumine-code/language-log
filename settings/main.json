@@ -1,7 +1,10 @@
 {
   ".source.log": {
     "editor": {
-      "softWrap": false
+      "softWrap": false,
+      "commentStart": "",
+      "commentEnd": "",
+      "commentDelimiters": {}
     }
   }
 }
