@@ -2,6 +2,9 @@
 Source: https://github.com/Tudyx/tree-sitter-log
 Revision: 62cfe307e942af3417171243b599cc7deac5eab9
 
+Parser source: github:Tudyx/tree-sitter-log#62cfe307e942af3417171243b599cc7deac5eab9
+Resolved commit: 62cfe307e942af3417171243b599cc7deac5eab9
+
 Original file: LICENSE-MIT
 
 Permission is hereby granted, free of charge, to any
@@ -32,6 +35,9 @@ DEALINGS IN THE SOFTWARE.
 ----- BEGIN THIRD-PARTY LICENSE: parser:lumine-code_tree-sitter-plain-text -----
 Source: https://github.com/lumine-code/tree-sitter-plain-text
 Revision: d09951812cbdbae67b5b19dc5864f7f29b5b0625
+
+Parser source: github:lumine-code/tree-sitter-plain-text#d09951812cbdbae67b5b19dc5864f7f29b5b0625
+Resolved commit: d09951812cbdbae67b5b19dc5864f7f29b5b0625
 
 Original file: LICENSE
 
